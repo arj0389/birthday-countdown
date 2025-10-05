@@ -1,0 +1,175 @@
+body {
+  font-family: 'Poppins', sans-serif;
+  background: linear-gradient(to bottom right, #ffd6e8, #fff1f5);
+  margin: 0;
+  padding: 0;
+  color: #5a3e4d;
+  overflow-x: hidden;
+}
+
+/* ---------- Main Page ---------- */
+.container {
+  text-align: center;
+  padding: 80px 20px;
+  position: relative;
+  z-index: 2;
+}
+
+.title {
+  font-size: 2.8rem;
+  color: #ff69b4;
+  margin-bottom: 10px;
+  text-shadow: 0 2px 5px rgba(255, 182, 193, 0.4);
+}
+
+.subtitle {
+  font-size: 1.2rem;
+  color: #7b4b63;
+  margin-bottom: 50px;
+}
+
+.card-container {
+  display: flex;
+  justify-content: center;
+}
+
+.day-card {
+  background: linear-gradient(to bottom right, #ffe4ec, #ffd1dc);
+  border: none;
+  border-radius: 25px;
+  width: 300px;
+  padding: 40px 30px;
+  text-decoration: none;
+  color: #5a3e4d;
+  box-shadow: 0 6px 20px rgba(255, 182, 193, 0.6);
+  transition: all 0.3s ease;
+}
+
+.day-card:hover {
+  transform: translateY(-5px) scale(1.05);
+  box-shadow: 0 8px 25px rgba(255, 105, 180, 0.7);
+}
+
+.day-card h2 {
+  font-size: 2rem;
+  margin-bottom: 10px;
+  color: #ff5c9a;
+}
+
+.day-card p {
+  font-size: 1.1rem;
+  color: #7b4b63;
+}
+
+/* ---------- Day Page ---------- */
+.day-page {
+  max-width: 800px;
+  margin: 60px auto;
+  background: #fff5f8;
+  border-radius: 25px;
+  padding: 50px;
+  box-shadow: 0 8px 25px rgba(255, 182, 193, 0.5);
+  text-align: center;
+  position: relative;
+  z-index: 2;
+}
+
+.back-btn {
+  text-decoration: none;
+  color: #ff69b4;
+  font-weight: 600;
+  display: inline-block;
+  margin-bottom: 20px;
+}
+
+.day-page h1 {
+  font-size: 2.4rem;
+  color: #ff5c9a;
+}
+
+.day-page h2 {
+  color: #7b4b63;
+  margin-top: 10px;
+  font-size: 1.5rem;
+}
+
+.message {
+  font-size: 1.2rem;
+  margin: 25px auto;
+  line-height: 1.7;
+  color: #5a3e4d;
+  max-width: 700px;
+}
+
+.photo-gallery {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 18px;
+  margin-top: 30px;
+}
+
+.photo-gallery img {
+  width: 230px;
+  height: 270px;
+  object-fit: cover;
+  border-radius: 18px;
+  box-shadow: 0 5px 15px rgba(255, 182, 193, 0.5);
+  transition: transform 0.3s ease;
+}
+
+.photo-gallery img:hover {
+  transform: scale(1.05);
+}
+
+.footer-text {
+  margin-top: 40px;
+  color: #7b4b63;
+  font-style: italic;
+}
+
+/* ---------- Floral Decor ---------- */
+.flowers {
+  display: flex;
+  justify-content: center;
+  margin-top: 35px;
+  gap: 25px;
+}
+
+.rose,
+.sunflower {
+  width: 65px;
+  height: 65px;
+  animation: float 4s ease-in-out infinite alternate;
+}
+
+@keyframes float {
+  from { transform: translateY(0px); }
+  to { transform: translateY(-10px); }
+}
+
+/* ---------- Petal Animation ---------- */
+.petals::before,
+.petals::after {
+  content: '';
+  position: fixed;
+  top: -10%;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url('C:\Users\sarva\Downloads\ProjectUkiyo\images\rose1.jpg');
+  background-size: 100px;
+  opacity: 0.2;
+  pointer-events: none;
+  animation: petalsFall 25s linear infinite;
+  z-index: 1;
+}
+
+.petals::after {
+  animation-delay: 12.5s;
+}
+
+@keyframes petalsFall {
+  0% { background-position: 0 -10%; }
+  100% { background-position: 0 120%; }
+}

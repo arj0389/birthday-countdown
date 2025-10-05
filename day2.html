@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Day 2 ✨ Your Eyes</title>
+  <link rel="stylesheet" href="day2.css" />
+</head>
+<body>
+  <div class="stars"></div>
+  <div class="twinkle"></div>
+
+  <div class="day-page">
+    <a href="index.html" class="back-btn">← Back</a>
+
+    <h1>Day 2 ✨</h1>
+    <h2>Your Eyes — More beautiful than the glowing stars 💫</h2>
+
+    <p class="message">
+      My love, your eyes — in infinite timelines I'd fall for them. Just knowing I could look into them gives me boundless joy,  
+      a place where our imagination swirls us into the boundless beautiful night, made of your softness and beauty.  
+      They hold warmth, beauty, and charm — a universe for me that’s made up entirely of beautiful you. 💖
+    </p>
+
+    <div class="eyes-gallery">
+      <img src="ishikad21.jpg" alt="Her eyes">
+      <img src="ishikad22.jpg" alt="Her eyes again">
+      <img src="ishikad23.jpg" alt="Her eyes again">
+      <img src="ishikad24.jpg" alt="Her eyes again">
+      <img src="ishikad25.jpg" alt="Her eyes again">
+      <img src="ishikad26.jpg" alt="Her eyes again">
+    </div>
+
+    <div class="generator">
+      <button id="genButton" class="glow-btn">✨ Describe My Eyes ✨</button>
+      <p id="phraseOutput" class="phrase-text">Click the button and let the universe describe them 💫</p>
+    </div>
+
+    <p class="footer-text">
+      Day 2 of 30 🌙 — one more reason, infinite more to come 💕
+    </p>
+  </div>
+
+  <audio autoplay loop>
+    <source src="music.mp3" type="audio/mpeg" />
+  </audio>
+
+  <script>
+    const phrases = [
+      "Like starlight resting on calm water 🌌",
+      "Like in another universe, I'm still staring into them and floating in the galaxies 🌠",
+      "Like it's the difference between a good and bad day 🌧️",
+      "Like when they meet mine in church, I would still choose sin ✨",
+      "Endless, soft, and quietly powerful 💫",
+      "Like a home I would always like to be in 💕"
+    ];
+
+    let remainingPhrases = [...phrases];
+
+    document.getElementById("genButton").addEventListener("click", () => {
+      if (remainingPhrases.length === 0) remainingPhrases = [...phrases];
+      const randomIndex = Math.floor(Math.random() * remainingPhrases.length);
+      const randomPhrase = remainingPhrases[randomIndex];
+      document.getElementById("phraseOutput").textContent = randomPhrase;
+      remainingPhrases.splice(randomIndex, 1);
+    });
+  </script>
+</body>
+</html>
