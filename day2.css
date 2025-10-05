@@ -242,3 +242,41 @@ h2 {
   font-weight: 500;
   transition: opacity 0.5s ease;
 }
+
+.music-btn {
+  position: fixed;
+  bottom: 25px;
+  right: 25px;
+  padding: 12px 24px;
+  border: none;
+  border-radius: 30px;
+  background: linear-gradient(135deg, #6a11cb, #2575fc);
+  color: #fff;
+  font-family: "Poppins", sans-serif;
+  font-size: 1.1rem;
+  cursor: pointer;
+  box-shadow: 0 0 25px rgba(120, 200, 255, 0.8);
+  animation: floaty 3s ease-in-out infinite, glowPulse 2.5s infinite alternate;
+  transition: all 0.4s ease;
+  z-index: 9999;
+}
+
+.music-btn:hover {
+  transform: scale(1.1);
+}
+
+.music-btn.active {
+  background: linear-gradient(135deg, #ff4d79, #ffb6c1);
+  box-shadow: 0 0 35px rgba(255, 182, 193, 0.8);
+}
+
+@keyframes floaty {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-6px); }
+}
+
+@keyframes glowPulse {
+  0% { box-shadow: 0 0 15px rgba(100, 150, 255, 0.8); }
+  100% { box-shadow: 0 0 35px rgba(180, 230, 255, 1); }
+}
+
