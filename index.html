@@ -27,23 +27,32 @@
     </div>
   </div>
 
-  <audio id="bg-music" loop>
+<audio id="bg-music" loop>
   <source src="music.mp3" type="audio/mpeg" />
 </audio>
 
-<button id="music-btn" class="music-btn">🎵 Play Music</button>
+<button id="music-btn" class="music-btn" title="Play music 🎵">
+  <span>🎵</span>
+</button>
 
 <script>
-  const btn = document.getElementById("music-btn");
-  const audio = document.getElementById("bg-music");
+  const musicBtn = document.getElementById("music-btn");
+  const bgMusic = document.getElementById("bg-music");
+  let isPlaying = false;
 
-  btn.addEventListener("click", () => {
-    audio.play();
-    btn.textContent = "🎶 Music Playing...";
-    btn.classList.add("active");
-    setTimeout(() => btn.style.opacity = "0", 3000); // fades away
+  musicBtn.addEventListener("click", () => {
+    if (!isPlaying) {
+      bgMusic.play();
+      isPlaying = true;
+      musicBtn.classList.add("playing");
+    } else {
+      bgMusic.pause();
+      isPlaying = false;
+      musicBtn.classList.remove("playing");
+    }
   });
 </script>
+
 
 </body>
 </html>
