@@ -27,8 +27,22 @@
     </div>
   </div>
 
-  <audio autoplay loop>
-    <source src="music.mp3" type="audio/mpeg" />
-  </audio>
+  <audio id="bg-music" loop>
+  <source src="music.mp3" type="audio/mpeg" />
+</audio>
+
+<button id="music-btn" class="music-btn">🎵 Play Music</button>
+
+<script>
+  const btn = document.getElementById("music-btn");
+  const audio = document.getElementById("bg-music");
+
+  btn.addEventListener("click", () => {
+    audio.play();
+    btn.textContent = "🎶 Music Playing...";
+    btn.classList.add("active");
+    setTimeout(() => btn.style.opacity = "0", 3000); // fades away
+  });
+</script>
 </body>
 </html>
