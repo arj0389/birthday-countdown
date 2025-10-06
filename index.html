@@ -4,54 +4,67 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>30 Days of You ✨</title>
-  <link rel="stylesheet" href="day2.css" />
+  <link rel="stylesheet" href="day3.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Raleway:wght@300;400;600&display=swap" rel="stylesheet">
 </head>
 <body>
-  <div class="stars"></div>
-  <div class="twinkle"></div>
+<div class="magazine-texture"></div>
+
+  <div class="light-overlay"></div>
+  <div class="glitter"></div>
 
   <div class="container">
-    <h1 class="title">30 Days of You ✨</h1>
-    <p class="subtitle">Every day, you make my world prettier 💫</p>
+    <h1 class="title sparkle">30 Days of You</h1>
+    <p class="subtitle">Every step a statement, every day a moment on the runway 💫</p>
 
     <div class="card-container">
-      <a href="day1.html" class="day-card">
-        <h2>Day 1 🌸</h2>
-        <p>Your Smile</p>
-      </a>
-
-      <a href="day2.html" class="day-card">
-        <h2>Day 2 🌌</h2>
-        <p>Your Eyes</p>
-      </a>
+      <a href="day1.html" class="day-card"><h2>Day 1 🌸</h2><p>Your Smile</p></a>
+      <a href="day2.html" class="day-card"><h2>Day 2 🌌</h2><p>Your Eyes</p></a>
+      <a href="day3.html" class="day-card"><h2>Day 3 👠</h2><p>Your Style</p></a>
     </div>
   </div>
 
-<audio id="bg-music" loop>
-  <source src="music.mp3" type="audio/mpeg" />
-</audio>
+  <audio autoplay loop>
+    <source src="music.mp3" type="audio/mpeg" />
+  </audio>
+  <button class="music-btn">🎵</button>
 
-<button id="music-btn" class="music-btn" title="Play music 🎵">
-  <span>🎵</span>
-</button>
+  <script>
+    const music = document.querySelector("audio");
+    const btn = document.querySelector(".music-btn");
+    let playing = true;
+    btn.addEventListener("click", () => {
+      playing ? music.pause() : music.play();
+      playing = !playing;
+      btn.textContent = playing ? "🎵" : "🔇";
+    });
+  </script>
 
 <script>
-  const musicBtn = document.getElementById("music-btn");
-  const bgMusic = document.getElementById("bg-music");
-  let isPlaying = false;
+(() => {
+  let last = 0;
+  const throttleMs = 20; // lower = smoother but more nodes
+  document.addEventListener('mousemove', e => {
+    const now = Date.now();
+    if (now - last < throttleMs) return;
+    last = now;
 
-  musicBtn.addEventListener("click", () => {
-    if (!isPlaying) {
-      bgMusic.play();
-      isPlaying = true;
-      musicBtn.classList.add("playing");
-    } else {
-      bgMusic.pause();
-      isPlaying = false;
-      musicBtn.classList.remove("playing");
-    }
+    const sparkle = document.createElement('div');
+    sparkle.className = 'cursor-glow';
+    // use clientX/clientY so fixed positioning matches viewport
+    sparkle.style.left = `${e.clientX}px`;
+    sparkle.style.top  = `${e.clientY}px`;
+    document.body.appendChild(sparkle);
+
+    // remove after animation ends (matching CSS fadeTrail)
+    setTimeout(() => {
+      if (sparkle && sparkle.parentNode) sparkle.parentNode.removeChild(sparkle);
+    }, 900);
   });
+})();
 </script>
+
+
 
 
 </body>
