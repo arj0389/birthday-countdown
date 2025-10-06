@@ -1,0 +1,418 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background: #000;
+  color: #f8f8f8;
+  font-family: 'Raleway', sans-serif;
+  overflow-x: hidden;
+  position: relative;
+}
+
+/* SPOTLIGHT MOVEMENT */
+.light-overlay {
+  position: fixed;
+  inset: 0;
+  background: radial-gradient(circle at 50% 50%, rgba(255,255,255,0.08), transparent 60%);
+  animation: moveLights 6s ease-in-out infinite alternate;
+  pointer-events: none;
+}
+@keyframes moveLights {
+  0% { background-position: 20% 30%; }
+  100% { background-position: 80% 70%; }
+}
+
+/* GLITTER BACKGROUND */
+.glitter {
+  position: fixed;
+  inset: 0;
+  background-image: radial-gradient(rgba(255,255,255,0.08) 1px, transparent 1px);
+  background-size: 3px 3px;
+  animation: shimmer 8s linear infinite;
+  pointer-events: none;
+}
+@keyframes shimmer {
+  0% { transform: translate(0, 0); }
+  100% { transform: translate(-100px, 100px); }
+}
+
+.magazine-texture {
+  position: fixed;
+  inset: 0;
+  background-image: repeating-linear-gradient(
+    0deg,
+    rgba(255,255,255,0.03) 0px,
+    rgba(255,255,255,0.03) 1px,
+    transparent 1px,
+    transparent 2px
+  );
+  pointer-events: none;
+  mix-blend-mode: overlay;
+}
+
+
+/* SPARKLE TEXT EFFECT */
+.sparkle {
+  background: linear-gradient(90deg, #f0e6d2, #d4af37, #f0e6d2);
+  background-size: 200% auto;
+  color: transparent;
+  -webkit-background-clip: text;
+  background-clip: text;
+  animation: shimmerText 3s linear infinite;
+}
+@keyframes shimmerText {
+  0% { background-position: 0% 50%; }
+  100% { background-position: 200% 50%; }
+}
+
+/* TITLE */
+.container {
+  text-align: center;
+  padding: 6rem 2rem;
+}
+.title {
+  font-family: 'Playfair Display', serif;
+  font-size: 3.8rem;
+  letter-spacing: 1.5px;
+}
+.subtitle {
+  color: #d4af37;
+  font-weight: 300;
+  margin-top: 1.5rem;
+  font-size: 1.1rem;
+}
+
+/* CARDS */
+.card-container {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 2rem;
+  margin-top: 4rem;
+}
+.day-card {
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(212,175,55,0.4);
+  border-radius: 15px;
+  width: 200px;
+  padding: 2rem 1rem;
+  text-decoration: none;
+  color: #f8f8f8;
+  box-shadow: 0 0 20px rgba(212,175,55,0.1);
+  transition: all 0.4s ease;
+}
+.day-card:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 0 40px rgba(212,175,55,0.4);
+  border-color: #d4af37;
+}
+
+/* DAY PAGE */
+.day-page {
+  text-align: center;
+  padding: 6rem 2rem;
+}
+.day-page h1 {
+  font-family: 'Playfair Display', serif;
+  font-size: 3rem;
+}
+.day-page h2 {
+  font-weight: 300;
+  font-family: 'Raleway', sans-serif;
+  font-size: 1.1rem;
+  color: #e6cfa8; /* soft gold like index */
+  letter-spacing: 1.2px;
+  margin-top: 0.6rem;
+  margin-bottom: 1.7rem;
+  text-shadow: 0 0 10px rgba(230,207,168,0.2);
+}
+
+
+
+.message {
+  max-width: 700px;
+  margin: 0 auto 3rem;
+  line-height: 1.8;
+  font-size: 1.1rem;
+  color: #f0f0f0;
+}
+
+/* GALLERY */
+/* GALLERY */
+.style-gallery {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr); /* exactly 3 per row */
+  gap: 2rem;
+  margin: 3rem auto;
+  max-width: 1000px; /* keeps it centered and elegant */
+  justify-items: center;
+}
+
+.style-gallery img {
+  width: 100%;
+  border-radius: 10px;
+  border: 1px solid rgba(212,175,55,0.3);
+  transition: 0.4s ease;
+}
+
+.style-gallery img:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 30px rgba(212,175,55,0.4);
+}
+
+@media (max-width: 900px) {
+  .style-gallery {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 600px) {
+  .style-gallery {
+    grid-template-columns: 1fr;
+  }
+}
+
+
+/* BUTTONS */
+.glow-btn {
+  background: linear-gradient(90deg, #d4af37, #f5deb3);
+  color: #000;
+  border: none;
+  border-radius: 50px;
+  padding: 0.9rem 2rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.3s;
+}
+.glow-btn:hover {
+  filter: brightness(1.15);
+  transform: translateY(-3px);
+}
+.phrase-text {
+  margin-top: 1rem;
+  color: #d4af37;
+  font-style: italic;
+}
+.footer-text {
+  margin-top: 3rem;
+  color: #aaa;
+  font-style: italic;
+}
+
+/* BACK + MUSIC BUTTON */
+.back-btn {
+  color: #d4af37;
+  text-decoration: none;
+  font-weight: 500;
+  display: inline-block;
+  margin-bottom: 2rem;
+}
+.music-btn {
+  position: fixed;
+  bottom: 25px;
+  right: 25px;
+  background: #d4af37;
+  border: none;
+  border-radius: 50%;
+  width: 55px;
+  height: 55px;
+  font-size: 1.4rem;
+  color: #000;
+  cursor: pointer;
+  box-shadow: 0 0 10px rgba(212,175,55,0.8);
+  transition: 0.3s;
+}
+.music-btn:hover {
+  transform: scale(1.05);
+}
+
+/* ---------- VOGUE + FRAME + CURSOR (REPLACE CURRENT VOGUE & CURSOR RULES) ---------- */
+
+/* shimmer used for titles and VOGUE */
+@keyframes shimmerText {
+  0% { background-position: 0% 50%; }
+  100% { background-position: 200% 50%; }
+}
+
+/* VOGUE frame (centered VOGUE above image, less gap, bolder border) */
+.vogue-frame {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 50px;              /* less empty space */
+  background: rgba(255,255,255,0.02);
+  border-radius: 12px;
+  overflow: visible;              /* IMPORTANT: allow cursor to show above */
+  border: 2px solid rgba(244,179,147,0.45); /* bolder rose-gold edge */
+  box-shadow: 0 0 20px rgba(244,179,147,0.12);
+  z-index: 1;
+}
+
+/* VOGUE masthead centered in the *header* space above the image */
+.vogue-frame::before {
+  content: "VOGUE";
+  position: absolute;
+  top: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-family: 'Playfair Display', serif;
+  font-size: 2rem;
+  letter-spacing: 6px;
+  text-transform: uppercase;
+  background: linear-gradient(90deg, #f0e6d2, #d4af37, #f0e6d2);
+  background-size: 200% auto;
+  color: transparent;
+  -webkit-background-clip: text;
+  background-clip: text;
+  animation: shimmerText 3s linear infinite;
+  text-shadow: 0 0 15px rgba(212,175,55,0.2);
+  pointer-events: none;
+  z-index: 5;
+}
+
+
+/* image sits *below* the VOGUE header, smaller gap */
+.vogue-frame img {
+  margin-top: 22px;
+  width: 100%;
+  height: auto;
+  border-radius: 8px;
+  border: 1px solid rgba(255,255,255,0.06);
+  transition: transform 0.36s ease, box-shadow 0.36s ease;
+  z-index: 2;
+}
+.vogue-frame:hover img {
+  transform: scale(1.04);
+  box-shadow: 0 0 30px rgba(244,179,147,0.32);
+}
+
+/* Subheading (Day 3 subtitle) — bold, uppercase, editorial */
+.day-page h2 {
+  font-weight: 700;
+  font-family: 'Raleway', sans-serif;
+  font-size: 1.18rem;
+  color: #f4b393;
+  letter-spacing: 1px;
+  margin-top: 0.6rem;
+  margin-bottom: 1.7rem;
+  text-transform: uppercase;
+  text-shadow: 0 0 8px rgba(244,179,147,0.18);
+}
+
+/* ---------- Cursor sparkle (always above everything) ---------- */
+/* Hide the system cursor if you want the trail only (optional) */
+/* body { cursor: none; }   <-- uncomment if you prefer no native cursor */
+
+.cursor-glow {
+  position: fixed;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  pointer-events: none;
+  background: radial-gradient(circle, rgba(255, 223, 186, 0.95) 0%, rgba(244, 179, 147, 0.28) 60%);
+  transform: translate(-50%, -50%); /* center on pointer */
+  animation: fadeTrail 0.85s linear forwards;
+  z-index: 2147483647 !important; /* absolute top layer */
+}
+
+@keyframes fadeTrail {
+  from { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+  to   { opacity: 0; transform: translate(-50%, -50%) scale(3); }
+}
+
+/* safety rules to keep frames under cursor layer */
+.vogue-frame, .style-gallery, .day-card, img {
+  position: relative;
+  z-index: 1;
+}
+
+.day-page h2 {
+  color: #d4af37 !important; /* soft gold, overrides all */
+  font-weight: 300;
+  letter-spacing: 1.2px;
+  margin-top: 0.6rem;
+  margin-bottom: 1.7rem;
+  text-shadow: 0 0 10px rgba(230,207,168,0.2);
+}
+
+/* ===== MINI DRESS-UP FASHION GAME (SIDE BY SIDE) ===== */
+.fashion-game {
+  margin-top: 5rem;
+  text-align: center;
+}
+
+.game-title {
+  font-family: 'Playfair Display', serif;
+  background: linear-gradient(90deg, #f0e6d2, #d4af37, #f0e6d2);
+  background-size: 200% auto;
+  color: transparent;
+  -webkit-background-clip: text;
+  background-clip: text;
+  animation: shimmerText 3s linear infinite;
+  margin-bottom: 2rem;
+  font-size: 1.6rem;
+  text-shadow: 0 0 12px rgba(212,175,55,0.25);
+}
+
+/* Layout: 2 boxes side by side */
+.fashion-stage {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 3rem;
+}
+
+.fashion-box {
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(212,175,55,0.3);
+  border-radius: 15px;
+  padding: 1.5rem;
+  width: 260px;
+  box-shadow: 0 0 20px rgba(212,175,55,0.15);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  transition: all 0.3s ease;
+}
+.fashion-box:hover {
+  box-shadow: 0 0 35px rgba(212,175,55,0.35);
+  transform: translateY(-5px);
+}
+
+.fashion-box h3 {
+  font-family: 'Raleway', sans-serif;
+  color: #d4af37;
+  margin-bottom: 0.8rem;
+  letter-spacing: 1px;
+  font-weight: 500;
+  text-transform: uppercase;
+}
+
+.model-area,
+.accessory-area {
+  background: rgba(0, 0, 0, 0.4);
+  border: 1px solid rgba(212,175,55,0.25);
+  border-radius: 10px;
+  width: 180px;
+  height: 260px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 1rem;
+  position: relative;
+}
+
+.model-area img,
+.accessory-area img {
+  height: 220px;
+  border-radius: 8px;
+  transition: opacity 0.6s ease-in-out, transform 0.3s ease;
+}
+.model-area img:hover,
+.accessory-area img:hover {
+  transform: scale(1.03);
+}

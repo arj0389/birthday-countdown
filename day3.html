@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Day 3 👠 Your Style</title>
+  <link rel="stylesheet" href="day3.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Raleway:wght@300;400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="magazine-texture"></div>
+
+  <div class="light-overlay"></div>
+  <div class="glitter"></div>
+
+  <div class="day-page">
+    <a href="index.html" class="back-btn">← Back</a>
+    <h1 class="sparkle">Day 3 👠</h1>
+    <h2>Style that makes me not blink</h2>
+
+    <p class="message">
+      My love you have a style which makes me agape.  
+      The detail and effort you put, you look beautiful and purely gorgeous in everything you wear, makes me want to ask you to do a fashion show so I could watch you in everything.  
+      And everything adds to your beautiful style, your confidence, your charm, your laughter, everything is a delight to my eyes, and song to my ears.  
+      The lights or situation don’t make you shine — you *are* the light. ✨
+    </p>
+
+   <div class="style-gallery">
+  <div class="vogue-frame"><img src="ishikad21.jpg" alt="Style look 1"></div>
+  <div class="vogue-frame"><img src="ishikad31.jpg" alt="Style look 2"></div>
+  <div class="vogue-frame"><img src="ishikad32.jpg" alt="Style look 3"></div>
+  <div class="vogue-frame"><img src="ishikad33.jpg" alt="Style look 4"></div>
+  <div class="vogue-frame"><img src="ishikad34.jpg" alt="Style look 4"></div>
+  <div class="vogue-frame"><img src="ishikad35.jpg" alt="Style look 4"></div>
+  <div class="vogue-frame"><img src="ishikad36.jpg" alt="Style look 4"></div>
+  <div class="vogue-frame"><img src="ishikad37.jpg" alt="Style look 4"></div>
+  <div class="vogue-frame"><img src="ishikad38.jpg" alt="Style look 4"></div>
+</div>
+
+
+    <div class="generator">
+      <button id="genButton" class="glow-btn">💋 Vogue Verdict</button>
+      <p id="phraseOutput" class="phrase-text">Tap for the Vogue verdict 👑</p>
+    </div>
+
+
+  <!-- Mini Dress-Up Game Section -->
+<div class="fashion-game">
+  <h2 class="game-title">Runway Designer for You 👗</h2>
+
+  <div class="fashion-stage">
+    <!-- Model Box -->
+    <div class="fashion-box">
+      <h3>Model</h3>
+      <div class="model-area">
+        <img id="model" src="model1.png" alt="Fashion model">
+      </div>
+      <button class="glow-btn" onclick="changeOutfit()">Change Outfit</button>
+    </div>
+
+    <!-- Accessory Box -->
+    <div class="fashion-box">
+      <h3>Accessory</h3>
+      <div class="accessory-area">
+        <img id="accessory" src="accessory1.png" alt="Accessory preview">
+      </div>
+      <button class="glow-btn" onclick="changeAccessory()">Change Accessory</button>
+    </div>
+  </div>
+</div>
+
+
+
+    <p class="footer-text">Day 3 of 30 — Fashion bows to you.</p>
+  </div>
+
+  <audio autoplay loop>
+    <source src="music1.mp3" type="audio/mpeg" />
+  </audio>
+  <button class="music-btn">🎵</button>
+
+  <script>
+    const phrases = [
+      "A silhouette the stars could envy, I could just stare till infinity",
+      "Elegance tailored to perfection, that's you",
+      "You define the dresses darling",
+      "Runways pause just to watch you walk my honey",
+      "You define beauty my love",
+      "If beauty could move, it’d look like you."
+    ];
+
+    let remaining = [...phrases];
+    document.getElementById("genButton").addEventListener("click", () => {
+      if (remaining.length === 0) remaining = [...phrases];
+      const i = Math.floor(Math.random() * remaining.length);
+      document.getElementById("phraseOutput").textContent = remaining[i];
+      remaining.splice(i, 1);
+    });
+
+    const music = document.querySelector("audio");
+    const btn = document.querySelector(".music-btn");
+    let playing = true;
+    btn.addEventListener("click", () => {
+      playing ? music.pause() : music.play();
+      playing = !playing;
+      btn.textContent = playing ? "🎵" : "🔇";
+    });
+  </script>
+
+<script>
+(() => {
+  let last = 0;
+  const throttleMs = 20; // lower = smoother but more nodes
+  document.addEventListener('mousemove', e => {
+    const now = Date.now();
+    if (now - last < throttleMs) return;
+    last = now;
+
+    const sparkle = document.createElement('div');
+    sparkle.className = 'cursor-glow';
+    // use clientX/clientY so fixed positioning matches viewport
+    sparkle.style.left = `${e.clientX}px`;
+    sparkle.style.top  = `${e.clientY}px`;
+    document.body.appendChild(sparkle);
+
+    // remove after animation ends (matching CSS fadeTrail)
+    setTimeout(() => {
+      if (sparkle && sparkle.parentNode) sparkle.parentNode.removeChild(sparkle);
+    }, 900);
+  });
+})();
+</script>
+
+
+<script>
+const outfits = ["model1.png", "model2.png", "model3.png", "model4.png", "model5.png", "model6.png", "model7.png", "model8.png", "model9.png", "model10.png", ];
+const accessories = ["accessory1.png", "accessory2.png", "accessory3.png", "accessory4.png","accessory5.png", "accessory6.png", "accessory7.png", "accessory8.png", "accessory9.png", "accessory10.png"];
+
+let currentOutfit = 0;
+let currentAccessory = 0;
+
+function changeOutfit() {
+  const model = document.getElementById("model");
+  currentOutfit = (currentOutfit + 1) % outfits.length;
+  model.style.opacity = 0;
+  setTimeout(() => {
+    model.src = outfits[currentOutfit];
+    model.style.opacity = 1;
+  }, 400);
+}
+
+function changeAccessory() {
+  const accessory = document.getElementById("accessory");
+  currentAccessory = (currentAccessory + 1) % accessories.length;
+  accessory.style.opacity = 0;
+  setTimeout(() => {
+    accessory.src = accessories[currentAccessory];
+    accessory.style.opacity = 1;
+  }, 400);
+}
+</script>
+
+
+
+</body>
+</html>
