@@ -1,0 +1,256 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Day 4 — Her Voice</title>
+  <link rel="stylesheet" href="day4.css" />
+</head>
+<body>
+  <!-- Petal background -->
+  <canvas id="petalCanvas" class="petal-canvas" aria-hidden="true"></canvas>
+
+  <div class="container day-page">
+    <a href="index.html" class="back-btn">← Back</a>
+
+    <h1 class="title">Day 4 ✨</h1>
+    <h2 class="subtitle">Your voice — a garden that sings</h2>
+
+    <p class="message">
+      Your voice is like a melody to my ears my love, I can hear you speak always
+    </p>
+
+    <p class="message">
+      My music partner, any song I sing is lacking without you,
+      I just want to be with you and keep singing forever,
+      Even though it might an excuse to hear your voice, 
+      I can't have enough of it, Thank you so much for letting me listen to you my love
+    </p>
+
+    <!-- Photo gallery -->
+    <div class="photo-gallery">
+      <div class="voice-frame"><img src="ishikad41.jpg" alt=""></div>
+      <div class="voice-frame"><img src="ishikad42.jpg" alt=""></div>
+      <div class="voice-frame"><img src="ishikad43.jpg" alt=""></div>
+      <div class="voice-frame"><img src="ishikad44.jpg" alt=""></div>
+      <div class="voice-frame"><img src="ishikad45.jpg" alt=""></div>
+      <div class="voice-frame"><img src="ishikad46.jpg" alt=""></div>
+      <div class="voice-frame"><img src="ishikad47.jpg" alt=""></div>
+      <div class="voice-frame"><img src="ishikad48.jpg" alt=""></div>
+    </div>
+
+    <!-- Karaoke Garden -->
+    <div class="karaoke">
+      <h3 class="section-title">Karaoke Garden 🎤</h3>
+
+      <div class="karaoke-inner">
+        <div class="song-list">
+          <button class="song-btn" data-id="s1">Song 1</button>
+          <button class="song-btn" data-id="s2">Song 2</button>
+          <button class="song-btn" data-id="s3">Song 3</button>
+
+          <div class="player-controls">
+            <button id="playPause" class="control">Play</button>
+            <button id="stopBtn" class="control">Stop</button>
+            <div id="progressWrap" class="progress-wrap">
+              <div id="progress" class="progress"></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="lyrics-box">
+          <div id="lyricsTitle" class="lyrics-title">Choose a song</div>
+          <div id="lyricsArea" class="lyrics-area"></div>
+        </div>
+      </div>
+    </div>
+
+    <p class="footer-text">“Your voice stays.” 💗</p>
+  </div>
+
+  <!-- Karaoke audio -->
+  <audio id="karaokeAudio"></audio>
+
+  <!-- Background Music + Button -->
+  <audio id="bgMusic" src="bgmusic.mp3" autoplay loop></audio>
+  <button id="musicBtn" class="music-btn">🎵</button>
+
+  <script>
+  /* Background petals */
+  (function(){
+    const canvas = document.getElementById('petalCanvas');
+    if(!canvas) return;
+    const ctx = canvas.getContext('2d');
+    const DPR = Math.max(1, window.devicePixelRatio || 1);
+    let W = innerWidth, H = innerHeight;
+    function resize(){
+      W = innerWidth; H = innerHeight;
+      canvas.style.width = W + 'px';
+      canvas.style.height = H + 'px';
+      canvas.width = Math.floor(W * DPR);
+      canvas.height = Math.floor(H * DPR);
+      ctx.setTransform(DPR, 0, 0, DPR, 0, 0);
+    }
+    resize(); window.addEventListener('resize', resize);
+    const PETAL_COUNT = 75;
+    const petals = [];
+    const rand = (a,b)=> Math.random()*(b-a)+a;
+    function createPetal(){
+      return {
+        x: rand(0, W),
+        y: rand(-H, H),
+        w: rand(6, 12),
+        h: rand(9, 18),
+        rot: rand(0, Math.PI*2),
+        rotSpeed: rand(-0.02, 0.02),
+        sway: rand(0.4, 1.6),
+        speed: rand(0.18, 0.55),
+        hue: rand(300, 325),
+        sat: rand(40, 70),
+        light: rand(40, 70),
+        alpha: rand(0.7, 0.95),
+        offset: rand(0, 10000)
+      };
+    }
+    for(let i=0;i<PETAL_COUNT;i++) petals.push(createPetal());
+    function drawSinglePetal(p, t){
+      ctx.save();
+      ctx.translate(p.x, p.y);
+      ctx.rotate(p.rot + Math.sin((t + p.offset) * 0.002) * 0.6);
+      const g = ctx.createLinearGradient(-p.w, -p.h*0.2, p.w, p.h*0.8);
+      g.addColorStop(0, `hsla(${p.hue}, ${p.sat}%, ${Math.max(30,p.light-10)}%, ${p.alpha})`);
+      g.addColorStop(0.45, `hsla(${p.hue+6}, ${Math.max(40,p.sat+5)}%, ${Math.min(80,p.light+8)}%, ${Math.max(0.6,p.alpha-0.05)})`);
+      g.addColorStop(1, `hsla(${p.hue+12}, ${p.sat}%, ${Math.min(92,p.light+20)}%, 0.05)`);
+      ctx.fillStyle = g;
+      ctx.beginPath();
+      ctx.moveTo(0, -p.h*0.2);
+      ctx.bezierCurveTo(-p.w*0.8, -p.h*0.8, -p.w*0.3, p.h*0.9, 0, p.h*0.9);
+      ctx.bezierCurveTo(p.w*0.3, p.h*0.9, p.w*0.8, -p.h*0.8, 0, -p.h*0.2);
+      ctx.closePath();
+      ctx.fill();
+      ctx.restore();
+    }
+    let last = performance.now();
+    function loop(now){
+      ctx.clearRect(0,0,W,H);
+      for(const p of petals){
+        const timeFactor = now * 0.001 + p.offset;
+        p.x += Math.cos(timeFactor * p.sway) * 0.2;
+        p.y += p.speed;
+        p.rot += p.rotSpeed;
+        if(p.y > H + 20){ p.y = -20; p.x = rand(0, W); }
+        drawSinglePetal(p, now);
+      }
+      requestAnimationFrame(loop);
+    }
+    requestAnimationFrame(loop);
+  })();
+
+
+  /* Karaoke simple auto-scroll */
+  (function(){
+    const audio = document.getElementById('karaokeAudio');
+    const playPause = document.getElementById('playPause');
+    const stopBtn = document.getElementById('stopBtn');
+    const progress = document.getElementById('progress');
+    const SONGS = {
+      s1: { title: "Song 1", src: "song1.mp3", lyrics: [
+        "Achaa Ji Main Haari, Chalo Maan Jaao Naa",
+        "Dekhi Sabaki Yaari, Meraa Dil Jalaao Naa",
+        "Chhote Se Kasoor Pe, Aise Ho Khafaa",
+        "Roothe To Huzuur The, Meri Kyaa Khataa",
+        "Dekho Dil Naa Todo",
+        "Chhodo Haath Chhodo",
+        "Dekho Dil Na Todo",
+        "Are! Chhodo Haath Chhodo",
+        "Chhod Diyaa To Haath Maloge Samajhe?",
+        "Ajii Samajhe!",
+        "Aye! Zaalim Saath Dele",
+        "Achche Hum Akele",
+        "Zaalim Saath Dele",
+        "Are Achchhe Ham Akele",
+        "Chaar Kadam Bhii Chal Na Sakoge Samajhe?",
+        "Haan Samajhe!",
+        "(x2)",
+        "Kyaa Karanaa Hai Jeeke",
+        "Ho Rahanaa Kisi Ke",
+        "Kyaa Karanaa Hai Jeeke",
+        "Are, Ho Rahanaa Kisi Ke",
+        "Hum Naa Rahe To Yaad Karoge, Samajhe?",
+        "Samajhe!",
+        "(x2)",
+        "Achaa Ji Main Haari, Chalo Maan Jaao Naa",
+        "Dekhi Sabaki Yaari, Meraa Dil Jalaao Naa",
+      ]},
+      s2: { title: "Song 2", src: "song2.mp3", lyrics: [
+        "Song 2 - line 1",
+        "Song 2 - line 2",
+        "Song 2 - line 3"
+      ]},
+      s3: { title: "Song 3", src: "song3.mp3", lyrics: [
+        "Song 3 - line 1",
+        "Song 3 - line 2",
+        "Song 3 - line 3"
+      ]}
+    };
+    let current = null, scrollInterval = null;
+    document.querySelectorAll('.song-btn').forEach(btn=>{
+      btn.addEventListener('click', ()=>{
+        const id = btn.dataset.id;
+        if(!SONGS[id]) return;
+        current = SONGS[id];
+        loadSong(current);
+      });
+    });
+    function loadSong(song){
+      audio.src = song.src;
+      audio.currentTime = 0;
+      const area = document.getElementById('lyricsArea');
+      const title = document.getElementById('lyricsTitle');
+      area.innerHTML = '';
+      title.textContent = song.title;
+      song.lyrics.forEach(line=>{
+        const d = document.createElement('div');
+        d.className = 'lyric-line';
+        d.textContent = line;
+        area.appendChild(d);
+      });
+      audio.play();
+      playPause.textContent = 'Pause';
+      if(scrollInterval) clearInterval(scrollInterval);
+      scrollInterval = setInterval(()=>{ area.scrollTop += 1; }, 80);
+    }
+    playPause.addEventListener('click', ()=>{
+      if(!audio.src) return;
+      if(audio.paused){ audio.play(); playPause.textContent = 'Pause'; }
+      else { audio.pause(); playPause.textContent = 'Play'; }
+    });
+    stopBtn.addEventListener('click', ()=>{
+      audio.pause(); audio.currentTime = 0; playPause.textContent = 'Play';
+      const area = document.getElementById('lyricsArea');
+      if(scrollInterval) clearInterval(scrollInterval);
+      area.scrollTop = 0;
+    });
+    audio.addEventListener('ended', ()=>{
+      playPause.textContent = 'Play';
+      if(scrollInterval) clearInterval(scrollInterval);
+    });
+    audio.addEventListener('timeupdate', ()=>{
+      if(audio.duration) progress.style.width = (audio.currentTime / audio.duration * 100) + '%';
+    });
+  })();
+
+  /* Background music toggle */
+  (function(){
+    const bg = document.getElementById('bgMusic');
+    const btn = document.getElementById('musicBtn');
+    let playing = true;
+    btn.addEventListener('click', ()=>{
+      if(playing) bg.pause(); else bg.play();
+      playing = !playing;
+      btn.textContent = playing ? "🎵" : "🔇";
+    });
+  })();
+  </script>
+</body>
+</html>
