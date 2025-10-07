@@ -1,71 +1,198 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>30 Days of You ✨</title>
-  <link rel="stylesheet" href="day3.css" />
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Raleway:wght@300;400;600&display=swap" rel="stylesheet">
-</head>
-<body>
-<div class="magazine-texture"></div>
+  <link rel="stylesheet" href="day4.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600&family=Raleway:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    body {
+      overflow-x: hidden;
+      min-height: 100vh;
+      color: #222; /* readable dark text */
+      text-align: center;
+      font-family: 'Raleway', sans-serif;
+    }
 
-  <div class="light-overlay"></div>
-  <div class="glitter"></div>
+    .title {
+      font-family: 'Playfair Display', serif;
+      font-size: 3rem;
+      margin-top: 60px;
+      color: #2b002b; /* dark lavender tone */
+      font-weight: 600;
+    }
+
+    .subtitle {
+      margin-top: 8px;
+      font-size: 1.2rem;
+      color: #4b004b;
+    }
+
+    .card-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 1.5rem;
+      margin: 4rem auto;
+      max-width: 800px;
+      padding: 0 1rem;
+    }
+
+    .day-card {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 1.5rem;
+      border-radius: 1rem;
+      background: #fff;
+      color: #2b002b;
+      text-decoration: none;
+      border: 1px solid #ccc;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.15);
+      transition: all 0.3s ease;
+    }
+
+    .day-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 8px 20px rgba(0,0,0,0.25);
+    }
+
+    .day-card h2 {
+      margin-bottom: 0.4rem;
+      font-family: 'Playfair Display', serif;
+      color: #2b002b;
+      font-weight: 600;
+    }
+
+    .day-card p {
+      margin: 0;
+      font-size: 0.95rem;
+      color: #4b004b;
+    }
+
+    .music-btn {
+      position: fixed;
+      bottom: 25px;
+      right: 25px;
+      background: #2b002b;
+      border: none;
+      color: #fff;
+      border-radius: 50%;
+      width: 50px;
+      height: 50px;
+      font-size: 1.4rem;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+    }
+
+    .music-btn:hover {
+      background: #4b004b;
+      transform: scale(1.1);
+    }
+  </style>
+</head>
+
+<body>
+  <canvas id="petalCanvas" class="petal-canvas" aria-hidden="true"></canvas>
 
   <div class="container">
-    <h1 class="title sparkle">30 Days of You</h1>
+    <h1 class="title">30 Days of You ✨</h1>
     <p class="subtitle">Every step a statement, every day a moment on the runway 💫</p>
 
     <div class="card-container">
       <a href="day1.html" class="day-card"><h2>Day 1 🌸</h2><p>Your Smile</p></a>
       <a href="day2.html" class="day-card"><h2>Day 2 🌌</h2><p>Your Eyes</p></a>
       <a href="day3.html" class="day-card"><h2>Day 3 👠</h2><p>Your Style</p></a>
+      <a href="day4.html" class="day-card"><h2>Day 4 🎤</h2><p>Your Voice</p></a>
     </div>
   </div>
 
-  <audio autoplay loop>
+  <audio id="bgMusic" autoplay loop>
     <source src="music.mp3" type="audio/mpeg" />
   </audio>
-  <button class="music-btn">🎵</button>
+  <button id="bgToggle" class="music-btn">🎵</button>
 
   <script>
-    const music = document.querySelector("audio");
-    const btn = document.querySelector(".music-btn");
-    let playing = true;
+    const music = document.getElementById("bgMusic");
+    const btn = document.getElementById("bgToggle");
     btn.addEventListener("click", () => {
-      playing ? music.pause() : music.play();
-      playing = !playing;
-      btn.textContent = playing ? "🎵" : "🔇";
+      if (music.paused) {
+        music.play();
+        btn.textContent = "🎵";
+      } else {
+        music.pause();
+        btn.textContent = "🔇";
+      }
     });
   </script>
 
-<script>
-(() => {
-  let last = 0;
-  const throttleMs = 20; // lower = smoother but more nodes
-  document.addEventListener('mousemove', e => {
-    const now = Date.now();
-    if (now - last < throttleMs) return;
-    last = now;
+  <!-- Sakura Petal Background (from Day 4) -->
+  <script>
+  (function(){
+    const canvas = document.getElementById('petalCanvas');
+    if(!canvas) return;
+    const ctx = canvas.getContext('2d');
+    const DPR = Math.max(1, window.devicePixelRatio || 1);
 
-    const sparkle = document.createElement('div');
-    sparkle.className = 'cursor-glow';
-    // use clientX/clientY so fixed positioning matches viewport
-    sparkle.style.left = `${e.clientX}px`;
-    sparkle.style.top  = `${e.clientY}px`;
-    document.body.appendChild(sparkle);
+    let W = innerWidth, H = innerHeight;
+    function resize(){
+      W = innerWidth; H = innerHeight;
+      canvas.style.width = W + 'px';
+      canvas.style.height = H + 'px';
+      canvas.width = Math.floor(W * DPR);
+      canvas.height = Math.floor(H * DPR);
+      ctx.setTransform(DPR, 0, 0, DPR, 0, 0);
+    }
+    resize();
+    window.addEventListener('resize', resize);
 
-    // remove after animation ends (matching CSS fadeTrail)
-    setTimeout(() => {
-      if (sparkle && sparkle.parentNode) sparkle.parentNode.removeChild(sparkle);
-    }, 900);
-  });
-})();
-</script>
+    const PETAL_COUNT = 60;
+    const petals = [];
+    const rand = (a,b)=> Math.random()*(b-a)+a;
 
+    function makePetal(){
+      return {
+        x: rand(0,W),
+        y: rand(-H,H),
+        w: rand(6,10),
+        h: rand(10,16),
+        rot: rand(0,Math.PI*2),
+        speed: rand(0.3,0.6),
+        rotSpeed: rand(-0.015,0.015),
+        color: `hsl(${rand(300,330)},60%,75%)`
+      };
+    }
+    for(let i=0;i<PETAL_COUNT;i++) petals.push(makePetal());
 
+    function drawPetal(p){
+      ctx.save();
+      ctx.translate(p.x,p.y);
+      ctx.rotate(p.rot);
+      ctx.fillStyle = p.color;
+      ctx.beginPath();
+      ctx.moveTo(0, -p.h*0.3);
+      ctx.bezierCurveTo(-p.w, -p.h*0.8, -p.w*0.4, p.h*1.0, 0, p.h*1.2);
+      ctx.bezierCurveTo(p.w*0.4, p.h*1.0, p.w, -p.h*0.8, 0, -p.h*0.3);
+      ctx.closePath();
+      ctx.fill();
+      ctx.restore();
+    }
 
-
+    function animate(){
+      ctx.clearRect(0,0,W,H);
+      for(const p of petals){
+        p.x += Math.sin(p.rot)*0.5;
+        p.y += p.speed;
+        p.rot += p.rotSpeed;
+        if(p.y>H+10){p.y=-10;p.x=rand(0,W);}
+        drawPetal(p);
+      }
+      requestAnimationFrame(animate);
+    }
+    requestAnimationFrame(animate);
+  })();
+  </script>
 </body>
 </html>
